@@ -1,4 +1,3 @@
-
 # PPO 和 DPO 的区别
 
 在强化学习中，PPO（Proximal Policy Optimization，近端策略优化）和 DPO（Direct Policy Optimization，直接策略优化）是两种常用的优化策略的方法，它们在方法论和设计理念上存在一些显著的区别。以下是对它们的详细解释：
@@ -53,6 +52,22 @@ PPO 的核心思想是通过限制策略更新的步长来保持策略的稳定�
 | 实现与计算复杂度    | 易于实现，计算复杂度较低     | 实现简单，但有可能不稳定     |
 | 收敛速度            | 较慢，但稳定                 | 较快，但存在风险             |
 | 应用场景            | 适用于需要稳定更新的任务     | 适用于探索更激进的任务       |
+
+## 2. Direct Preference Optimization (DPO) and Its Role in the Project
+**Question**: Can you explain Direct Preference Optimization (DPO) and its role in this project?
+
+**Answer**: DPO is a single-stage policy training approach for reinforcement learning that optimizes model behavior to follow human preferences, bypassing the need to fit a reward model explicitly. In our project, we used DPO to fine-tune language models by maximizing the log-likelihood of human-preferred responses, which helps the model more closely align with human-like instruction following.
+
+## 3. Three Training Paradigms in the Framework
+**Question**: What are the three training paradigms used in your framework, and how do they differ?
+
+**Answer**: The three paradigms are:
+- **Self-reward**: The model generates responses and scores them by evaluating itself, iteratively using its best responses as training data.
+- **Teacher-reward**: An external teacher model, like Gemini, scores the model’s generated responses. The highest-scoring responses become the training targets.
+- **Teacher-demonstration**: Instead of scoring, the teacher model directly provides preferred responses, treating them as optimal answers for the student model to learn from.
+
+These paradigms differ in how they leverage external feedback and model self-assessment for fine-tuning.
+
 
 ## 4. 总结
 PPO 和 DPO 各有其优势和劣势。PPO 通过限制策略更新的幅度，在训练过程中实现了更高的稳定性，因此非常适合那些需要长期训练、并且对策略稳定性有较高要求的任务。而 DPO 采取了一种更直接的优化策略，允许策略自由更新，可能在一些特定的任务中实现更快的收敛，但需要面对不稳定的风险。
